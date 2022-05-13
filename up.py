@@ -3,7 +3,8 @@ import PyGithub
 
 
 from github import Github
-g = Github("username", "password")
+g = Github("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")
+# g = Github("username", "password")
 
 repo = g.get_user().get_repo(GITHUB_REPO)
 all_files = []
