@@ -4,7 +4,7 @@ from github import Github
 g = Github( st.secrets["username"] , st.secrets["pswd"] )
 g = Github( st.secrets["key"] )
 
-repo = g.get_user().get_repo("uploaderapp")
+repo = g.get_user().get_repo(uploaderapp)
 all_files = []
 contents = repo.get_contents("")
 while contents:
