@@ -1,10 +1,10 @@
 import streamlit as st
-
 from github import Github
-g = Github("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")
-# g = Github("username", "password")
 
-repo = g.get_user().get_repo(GITHUB_REPO)
+g = Github( st.secrets["username"] , st.secrets["pswd"] )
+g = Github( st.secrets["key"] )
+
+repo = g.get_user().get_repo("uploaderapp")
 all_files = []
 contents = repo.get_contents("")
 while contents:
