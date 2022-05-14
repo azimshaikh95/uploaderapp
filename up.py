@@ -1,30 +1,19 @@
 import streamlit as st
-from github import Github
+import pandas as pd
 
-g = Github( st.secrets["username"] , st.secrets["pswd"] )
-g = Github( st.secrets["key"] )
+df = pd.read_csv("data/abc.csv")
 
-repo = g.get_user().get_repo(uploaderapp)
-all_files = []
-contents = repo.get_contents("")
-while contents:
-    file_content = contents.pop(0)
-    if file_content.type == "dir":
-        contents.extend(repo.get_contents(file_content.path))
-    else:
-        file = file_content
-        all_files.append(str(file).replace('ContentFile(path="','').replace('")',''))
+@st.cache
+def convert_df(df):
+   return df.to_csv().encode('utf-8')
 
-with open('/tmp/file.txt', 'r') as file:
-    content = file.read()
 
-# Upload to github
-git_prefix = 'folder1/'
-git_file = git_prefix + 'file.txt'
-if git_file in all_files:
-    contents = repo.get_contents(git_file)
-    repo.update_file(contents.path, "committing files", content, contents.sha, branch="master")
-    print(git_file + ' UPDATED')
-else:
-    repo.create_file(git_file, "committing files", content, branch="master")
-    print(git_file + ' CREATED')
+csv = convert_df(df)
+
+st.download_button(
+   "Press to Download",
+   csv,
+   "file.csv",
+   "text/csv",
+   key='download-csv'
+)
